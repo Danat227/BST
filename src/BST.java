@@ -1,3 +1,6 @@
+import java.util.Iterator;
+import java.util.Stack;
+
 public class BST<K extends Comparable<K>, V> {
     private Node root;
     private int size; // Для задания Part 2.2 (1)
@@ -61,8 +64,53 @@ public class BST<K extends Comparable<K>, V> {
         }
         size++;
     }
+    public class KeyValuePair {
+        private K key;
+        private V val;
+
+        public KeyValuePair(K key, V val) {
+            this.key = key;
+            this.val = val;
+        }
+
+        public K getKey() { return key; }
+        public V getValue() { return val; }
+    }
+    public Iterable<KeyValuePair> iterator() {
+        return new Iterable<KeyValuePair>() {
+            public Iterator<KeyValuePair> iterator() {
+                return new Iterator<KeyValuePair>() {
+                    private Stack<Node> stack = new Stack<>();
+                    private Node current = root;
+
+                    public boolean hasNext() {
+                        return current != null || !stack.isEmpty();
+                    }
+
+
+                    public KeyValuePair next() {
+                        while (current != null) {
+                            stack.push(current);
+                            current = current.left;
+                        }
+
+                        Node node = stack.pop();
+                        KeyValuePair result = new KeyValuePair(node.key, node.val);
+
+                        current = node.right;
+                        return result;
+                    }
+                };
+            }
+        };
+    }
+
+
+
 
 }
+
+
 
 
 

@@ -15,13 +15,12 @@ public class Main {
         System.out.println("Поиск ключа 2: " + tree.get(2));
         System.out.println("Поиск ключа 9: " + tree.get(9));
         System.out.println("Поиск ключа 5: " + tree.get(5));
-
-        // Проверяем поиск несуществующего элемента
         System.out.println("Поиск ключа 10: " + tree.get(10));
 
 
-        tree.put(2, "Blackberry");
+        tree.put(2, "Арс");
         System.out.println("Обновленный ключ 2: " + tree.get(2));
         System.out.println("Новый размер дерева: " + tree.size());
     }
+    
 }
