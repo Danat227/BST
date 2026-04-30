@@ -16,5 +16,54 @@ public class BST<K extends Comparable<K>, V> {
     public int size() {
         return size;
     }
+    public V get(K key) {
+       Node current = root;
+       while (current != null) {
+           int cmp = key.compareTo(current.key);
+           if (cmp < 0) {
+               current = current.left;
+           } else if (cmp > 0) {
+               current = current.right;
+           } else {
+               return current.val;
+           }
+       }
+        return null;
+    }
+    public void put(K key, V val) {
+        if (root == null) {
+            root = new Node(key, val);
+            size++;
+            return;
+        }
+
+        Node current = root;
+        Node parent = null;
+
+        while (current != null) {
+            parent = current;
+            int cmp = key.compareTo(current.key);
+
+            if (cmp < 0) {
+                current = current.left;
+            } else if (cmp > 0) {
+                current = current.right;
+            } else {
+                current.val = val;
+                return;
+            }
+        }
+        int cmp = key.compareTo(parent.key);
+        if (cmp < 0) {
+            parent.left = new Node(key, val);
+        } else {
+            parent.right = new Node(key, val);
+        }
+        size++;
+    }
+
 }
+
+
+
 
