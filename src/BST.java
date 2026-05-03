@@ -104,7 +104,40 @@ public class BST<K extends Comparable<K>, V> {
             }
         };
     }
+    public void delete(K key) {
+        Node parent = null;
+        Node current = root;
 
+        while (current != null) {
+            int cmp = key.compareTo(current.key);
+            if (cmp < 0) { parent = current; current = current.left; }
+            else if (cmp > 0) { parent = current; current = current.right; }
+            else break;
+        }
+
+        if (current == null) return;
+
+        if (current.left != null && current.right != null) {
+            Node successorParent = current;
+            Node successor = current.right;
+            while (successor.left != null) {
+                successorParent = successor;
+                successor = successor.left;
+            }
+            current.key = successor.key;
+            current.val = successor.val;
+            current = successor;
+            parent = successorParent;
+        }
+
+        Node replacementChild = (current.left != null) ? current.left : current.right;
+
+        if (parent == null) root = replacementChild;
+        else if (parent.left == current) parent.left = replacementChild;
+        else parent.right = replacementChild;
+
+        size--;
+    }
 
 
 
